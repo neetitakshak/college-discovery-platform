@@ -2,15 +2,26 @@
 
 import { useEffect, useState } from "react";
 
+type College = {
+  id: string;
+  name: string;
+  location: string;
+  rating: number;
+  fees: number;
+  placements: number;
+  overview: string;
+};
+
 export default function ComparePage() {
-  const [colleges, setColleges] = useState<any[]>([]);
+  const [colleges, setColleges] = useState<College[]>([]);
   const [college1, setCollege1] = useState("");
   const [college2, setCollege2] = useState("");
 
   useEffect(() => {
     fetch("/api/colleges")
       .then((res) => res.json())
-      .then((data) => setColleges(data));
+      .then((data: College[]) => setColleges(data))
+      .catch((err) => console.error(err));
   }, []);
 
   const c1 = colleges.find((c) => c.id === college1);
@@ -18,16 +29,14 @@ export default function ComparePage() {
 
   return (
     <main className="p-8">
-      <h1 className="text-4xl font-bold mb-6">
-        Compare Colleges
-      </h1>
+      <h1 className="text-4xl font-bold mb-6">Compare Colleges</h1>
 
       <div className="flex gap-4 mb-8">
         <select
           className="border p-2"
           onChange={(e) => setCollege1(e.target.value)}
         >
-          <option>Select College 1</option>
+          <option value="">Select College 1</option>
           {colleges.map((c) => (
             <option key={c.id} value={c.id}>
               {c.name}
@@ -39,7 +48,7 @@ export default function ComparePage() {
           className="border p-2"
           onChange={(e) => setCollege2(e.target.value)}
         >
-          <option>Select College 2</option>
+          <option value="">Select College 2</option>
           {colleges.map((c) => (
             <option key={c.id} value={c.id}>
               {c.name}
