@@ -10,7 +10,7 @@ export async function GET() {
     });
 
     return NextResponse.json(colleges);
-  } catch (error) {
+  } catch  {
     return NextResponse.json(
       { error: "Failed to fetch colleges" },
       { status: 500 }
