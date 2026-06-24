@@ -2,8 +2,17 @@ import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
 export async function GET() {
+  await prisma.college.deleteMany();
   await prisma.college.createMany({
 data: [
+  {
+  name: "Amrita Vishwa Vidyapeetham",
+  location: "Coimbatore",
+  fees: 300000,
+  rating: 4.7,
+  placements: 1200000,
+  overview: "Leading private university known for engineering, research and innovation.",
+},
   {
     name: "IIT Bombay",
     location: "Mumbai",
